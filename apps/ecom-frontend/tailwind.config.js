@@ -8,9 +8,9 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {
-    fontFamily:{
-      'sans':'Inter var, ui-sans-serf, system-ui',
-      'serif':'Inter var, ui-sans-serf, system-ui',
+    fontFamily: {
+      sans: 'Inter var, ui-sans-serif, system-ui',
+      serif: 'Inter var, ui-sans-serif, system-ui',
     },
     fontSize: {
       sm: '0.875rem',
