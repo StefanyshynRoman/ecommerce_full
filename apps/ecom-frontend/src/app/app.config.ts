@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
         authority: environment.kinde.authority,
         redirectUrl: environment.kinde.redirectUrl,
         postLogoutRedirectUri: environment.kinde.postLogoutRedirectUri,
-        configId: environment.kinde.clientId,
+        clientId: environment.kinde.clientId,
         scope: 'openid profile email offline',
         responseType: 'code',
         silentRenew: true,
@@ -33,7 +33,7 @@ export const appConfig: ApplicationConfig = {
     }),
     { provide: AbstractSecurityStorage, useClass: SsrStorageService },
     provideQueryClient(new QueryClient()),
-    provideNgxStripe(environment.stripePublishableKey),
+    // provideNgxStripe(environment.stripePublishableKey),
 
   ],
 };
