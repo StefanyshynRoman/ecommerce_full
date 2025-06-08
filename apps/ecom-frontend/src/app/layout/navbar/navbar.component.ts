@@ -10,12 +10,12 @@ import { lastValueFrom } from 'rxjs';
   selector: 'ecom-navbar',
   imports: [CommonModule, RouterLink, FaIconComponent],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss',
+  styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  oauth2Service=inject(Oauth2Service);
- // productService = inject(UserProductService);
-  connectedUserQuery=this.oauth2Service.connectedUserQuery;
+  oauth2Service = inject(Oauth2Service);
+  // productService = inject(UserProductService);
+  connectedUserQuery = this.oauth2Service.connectedUserQuery;
   // categoryQuery = injectQuery(() => ({
   //   queryKey: ['categories'],
   //   queryFn: () => lastValueFrom(this.productService.findAllCategories()),
@@ -36,6 +36,7 @@ export class NavbarComponent {
       this.connectedUserQuery?.data()?.email !== this.oauth2Service.notConnected
     );
   }
+
   closeDropDownMenu() {
     const bodyElement = document.activeElement as HTMLBodyElement;
     if (bodyElement) {

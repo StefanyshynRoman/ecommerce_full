@@ -3,14 +3,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import {
   CreateQueryResult,
-  injectQuery,
+  injectQuery
 } from '@tanstack/angular-query-experimental';
 import { ConnectedUser } from '../shared/model/user.model';
 import { firstValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class Oauth2Service {
   http = inject(HttpClient);
@@ -24,7 +24,7 @@ export class Oauth2Service {
   fetch(): CreateQueryResult<ConnectedUser> {
     return injectQuery(() => ({
       queryKey: ['connected-user'],
-      queryFn: () => firstValueFrom(this.fetchUserHttp(false)),
+      queryFn: () => firstValueFrom(this.fetchUserHttp(false))
     }));
   }
 
@@ -48,6 +48,7 @@ export class Oauth2Service {
       }
     });
   }
+
   logout(): void {
     this.oidcSecurityService.logoff().subscribe();
   }

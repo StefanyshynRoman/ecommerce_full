@@ -9,7 +9,7 @@ export class SsrStorageService implements AbstractSecurityStorage {
   private platformId = inject(PLATFORM_ID);
 
 
-   read(key: string): string | null {
+  read(key: string): string | null {
     if (isPlatformBrowser(this.platformId)) {
       return sessionStorage.getItem(key);
     } else {
@@ -17,19 +17,19 @@ export class SsrStorageService implements AbstractSecurityStorage {
     }
   }
 
-   write(key: string, value: string): void {
+  write(key: string, value: string): void {
     if (isPlatformBrowser(this.platformId)) {
       sessionStorage.setItem(key, value);
     }
   }
 
-   remove(key: string): void {
+  remove(key: string): void {
     if (isPlatformBrowser(this.platformId)) {
       sessionStorage.removeItem(key);
     }
   }
 
-   clear(): void {
+  clear(): void {
     if (isPlatformBrowser(this.platformId)) {
       sessionStorage.clear();
     }
