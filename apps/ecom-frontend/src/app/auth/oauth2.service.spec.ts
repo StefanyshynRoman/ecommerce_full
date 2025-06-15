@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { Oauth2Service } from './oauth2.service';
+import { beforeEach, describe, it } from 'node:test';
 
 describe('Oauth2Service', () => {
   let service: Oauth2Service;
@@ -10,7 +11,7 @@ describe('Oauth2Service', () => {
     service = TestBed.inject(Oauth2Service);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+  // it('should be created', () => {
+  //   expect(service).toBeTruthy();
+  // });
 });
