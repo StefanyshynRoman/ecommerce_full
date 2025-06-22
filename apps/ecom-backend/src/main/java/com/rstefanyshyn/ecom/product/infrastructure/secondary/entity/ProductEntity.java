@@ -62,7 +62,9 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
   public ProductEntity() {
   }
 
-  public ProductEntity(Long id, String brand, String color, String description, String name, double price, boolean featured, ProductSize size, UUID publicId, int nbInStock, Set<PictureEntity> pictures, CategoryEntity category) {
+  public ProductEntity(Long id, String brand, String color, String description, String name,
+                       double price, boolean featured, ProductSize size, UUID publicId,
+                       int nbInStock, Set<PictureEntity> pictures, CategoryEntity category) {
     this.id = id;
     this.brand = brand;
     this.color = color;
