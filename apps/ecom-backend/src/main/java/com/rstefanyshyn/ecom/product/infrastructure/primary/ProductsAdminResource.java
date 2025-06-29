@@ -1,6 +1,8 @@
 package com.rstefanyshyn.ecom.product.infrastructure.primary;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;

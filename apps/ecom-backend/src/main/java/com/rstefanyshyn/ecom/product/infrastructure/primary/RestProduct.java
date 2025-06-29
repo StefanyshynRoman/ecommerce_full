@@ -59,11 +59,11 @@ public class RestProduct {
       .featured(restProduct.isFeatured())
       .nbInStock(restProduct.getNbInStock());
 
-    if(restProduct.publicId != null) {
+    if (restProduct.publicId != null) {
       productBuilder.publicId(new PublicId(restProduct.publicId));
     }
 
-    if(restProduct.pictures != null && !restProduct.pictures.isEmpty()) {
+    if (restProduct.pictures != null && !restProduct.pictures.isEmpty()) {
       productBuilder.pictures(RestPicture.toDomain(restProduct.getPictures()));
     }
 

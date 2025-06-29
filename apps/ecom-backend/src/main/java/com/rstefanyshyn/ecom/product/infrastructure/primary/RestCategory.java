@@ -22,11 +22,11 @@ public record RestCategory(UUID publicId,
   public static Category toDomain(RestCategory restCategory) {
     CategoryBuilder categoryBuilder = CategoryBuilder.category();
 
-    if(restCategory.name != null) {
+    if (restCategory.name != null) {
       categoryBuilder.name(new CategoryName(restCategory.name));
     }
 
-    if(restCategory.publicId != null) {
+    if (restCategory.publicId != null) {
       categoryBuilder.publicId(new PublicId(restCategory.publicId));
     }
 
@@ -36,7 +36,7 @@ public record RestCategory(UUID publicId,
   public static RestCategory fromDomain(Category category) {
     RestCategoryBuilder restCategoryBuilder = RestCategoryBuilder.restCategory();
 
-    if(category.getName() != null) {
+    if (category.getName() != null) {
       restCategoryBuilder.name(category.getName().value());
     }
 

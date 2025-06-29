@@ -82,7 +82,7 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
   public static ProductEntity from(Product product) {
     ProductEntityBuilder productEntityBuilder = ProductEntityBuilder.productEntity();
 
-    if(product.getDbId() != null) {
+    if (product.getDbId() != null) {
       productEntityBuilder.id(product.getDbId());
     }
 
