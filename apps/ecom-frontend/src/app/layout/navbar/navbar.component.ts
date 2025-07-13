@@ -14,7 +14,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class NavbarComponent {
   oauth2Service = inject(Oauth2Service);
-  // productService = inject(UserProductService);
+  // todo productService = inject(UserProductService);
   connectedUserQuery = this.oauth2Service.connectedUserQuery;
   // categoryQuery = injectQuery(() => ({
   //   queryKey: ['categories'],

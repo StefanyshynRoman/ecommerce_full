@@ -62,5 +62,5 @@ export interface ProductFilterForm {
   size?: {
     [size: string]: boolean;
   } | undefined;
-  sort: string
+  sort: string;
 }
