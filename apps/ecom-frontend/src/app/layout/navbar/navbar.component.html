@@ -6,9 +6,9 @@
       </a>
     </div>
   </div>
-<!--  <div class="navbar-center flex">-->
-<!--    <div class="menu menu-sm sm:menu-lg menu-horizontal px-1">-->
-<!--      <li><a href="/">Home</a></li>-->
+  <div class="navbar-center flex">
+    <div class="menu menu-sm sm:menu-lg menu-horizontal px-1">
+      <li><a href="/">Home</a></li>
 <!--      <li>-->
 <!--        <details #productsMenu>-->
 <!--          <summary>Products</summary>-->
@@ -24,30 +24,30 @@
 <!--          </ul>-->
 <!--        </details>-->
 <!--      </li>-->
-<!--      @if (connectedUserQuery?.status() === "success"-->
-<!--      && oauth2Service.hasAnyAuthorities(connectedUserQuery?.data()!, "ROLE_ADMIN")) {-->
-<!--        <li>-->
-<!--          <details #adminMenu>-->
-<!--            <summary>Admin</summary>-->
-<!--            <ul class="z-30">-->
-<!--              <li>-->
-<!--                <a routerLink="admin/categories/list"-->
-<!--                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Categories</a>-->
-<!--              </li>-->
-<!--              <li>-->
-<!--                <a routerLink="admin/products/list"-->
-<!--                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Products</a>-->
-<!--              </li>-->
-<!--              <li>-->
-<!--                <a routerLink="admin/orders/list"-->
-<!--                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Orders</a>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </details>-->
-<!--        </li>-->
-<!--      }-->
-<!--    </div>-->
-<!--  </div>-->
+      @if (connectedUserQuery?.status() === "success"
+      && oauth2Service.hasAnyAuthorities(connectedUserQuery?.data()!, "ROLE_ADMIN")) {
+        <li>
+          <details #adminMenu>
+            <summary>Admin</summary>
+            <ul class="z-30">
+              <li>
+                <a routerLink="admin/categories/list"
+                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Categories</a>
+              </li>
+              <li>
+                <a routerLink="admin/products/list"
+                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Products</a>
+              </li>
+              <li>
+                <a routerLink="admin/orders/list"
+                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Orders</a>
+              </li>
+            </ul>
+          </details>
+        </li>
+      }
+    </div>
+  </div>
   <div class="navbar-end pe-4 flex align-items-center">
     <div class="dropdown dropdown-end pe-4">
       <div tabindex="0" role="button">

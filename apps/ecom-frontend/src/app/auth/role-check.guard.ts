@@ -1,8 +1,4 @@
-import {
-  ActivatedRouteSnapshot,
-  CanActivateFn,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
 import { inject, PLATFORM_ID } from '@angular/core';
 import { Oauth2Service } from './oauth2.service';
 import { isPlatformBrowser } from '@angular/common';

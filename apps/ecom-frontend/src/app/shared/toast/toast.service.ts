@@ -3,7 +3,7 @@ import { AlertType, ToastInfo } from './toast-info.model';
 import { delay, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ToastService {
   toasts: ToastInfo[] = [];

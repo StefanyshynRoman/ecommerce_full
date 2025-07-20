@@ -5,10 +5,11 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { Oauth2Service } from '../../auth/oauth2.service';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
+import { ClickOutside } from 'ngxtension/click-outside';
 
 @Component({
   selector: 'ecom-navbar',
-  imports: [CommonModule, RouterLink, FaIconComponent],
+  imports: [CommonModule, RouterLink, FaIconComponent, ClickOutside],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -18,8 +19,8 @@ export class NavbarComponent {
   connectedUserQuery = this.oauth2Service.connectedUserQuery;
   // categoryQuery = injectQuery(() => ({
   //   queryKey: ['categories'],
-  //   queryFn: () => lastValueFrom(this.productService.findAllCategories()),
-  // }));
+  //   //   queryFn: () => lastValueFrom(this.productService.findAllCategories()),
+  //   // }));
   login(): void {
     this.closeDropDownMenu();
     this.oauth2Service.login();
