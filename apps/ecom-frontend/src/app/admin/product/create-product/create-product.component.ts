@@ -1,24 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
-import { NgxControlError } from 'ngxtension/control-error';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminProductService } from '../../admin-product.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { Router } from '@angular/router';
 import { BaseProduct, CreateProductFormContent, ProductPicture, ProductSizes, sizes } from '../../model/product.model';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
+import { NgxControlError } from 'ngxtension/control-error';
 
 @Component({
   selector: 'ecom-create-product',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxControlError],
   templateUrl: './create-product.component.html',
   styleUrl: './create-product.component.scss'
 })
