@@ -23,8 +23,8 @@
         @for (category of categoriesQuery.data()!.content; track category.publicId; let i = $index) {
           <tr class="border-gray-300">
             <th>{{ i }}</th>
-            <td>{{category.publicId}}</td>
-            <td>{{category.name}}</td>
+            <td>{{ category.publicId }}</td>
+            <td>{{ category.name }}</td>
             <td>
               <div (click)="deleteCategory(category.publicId!)" class="btn btn-secondary btn-sm">
                 Delete
@@ -43,7 +43,7 @@
   <div class="alert alert-error">
     <span>Error! Failed to load categories.</span>
   </div>
-} @else if(categoriesQuery.data()!.content.length === 0) {
+} @else if (categoriesQuery.data()!.content.length === 0) {
   <div role="alert" class="alert alert-info">
     <fa-icon [icon]="['fas', 'circle-exclamation']" size="2x"></fa-icon>
     <span>No category created yet.</span>
