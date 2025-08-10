@@ -1,11 +1,13 @@
 package com.rstefanyshyn.ecom.product.application;
 
 import com.rstefanyshyn.ecom.product.domain.aggregate.Category;
+import com.rstefanyshyn.ecom.product.domain.aggregate.FilterQuery;
 import com.rstefanyshyn.ecom.product.domain.aggregate.Product;
 import com.rstefanyshyn.ecom.product.domain.repository.CategoryRepository;
 import com.rstefanyshyn.ecom.product.domain.repository.ProductRepository;
 import com.rstefanyshyn.ecom.product.domain.service.CategoryCRUD;
 import com.rstefanyshyn.ecom.product.domain.service.ProductCRUD;
+import com.rstefanyshyn.ecom.product.domain.service.ProductShop;
 import com.rstefanyshyn.ecom.product.domain.vo.PublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +22,13 @@ public class ProductsApplicationService {
 
   private ProductCRUD productCRUD;
   private CategoryCRUD categoryCRUD;
-//  private ProductShop productShop;
+  private ProductShop productShop;
 //  private ProductUpdater productUpdater;
 
   public ProductsApplicationService(ProductRepository productRepository, CategoryRepository categoryRepository) {
     this.productCRUD = new ProductCRUD(productRepository);
     this.categoryCRUD = new CategoryCRUD(categoryRepository);
-//    this.productShop = new ProductShop(productRepository);
+   this.productShop = new ProductShop(productRepository);
 //    this.productUpdater = new ProductUpdater(productRepository);
   }
 
@@ -60,31 +62,31 @@ public class ProductsApplicationService {
     return categoryCRUD.findAll(pageable);
   }
 
-//  @Transactional(readOnly = true)
-//  public Page<Product> getFeaturedProducts(Pageable pageable) {
-//    return productShop.getFeaturedProducts(pageable);
-//  }
-//
-//  @Transactional(readOnly = true)
-//  public Optional<Product> findOne(PublicId id) {
-//    return productCRUD.findOne(id);
-//  }
-//
-//  @Transactional(readOnly = true)
-//  public Page<Product> findRelated(Pageable pageable, PublicId productPublicId) {
-//    return productShop.findRelated(pageable, productPublicId);
-//  }
-//
-//  @Transactional(readOnly = true)
-//  public Page<Product> filter(Pageable pageable, FilterQuery query) {
-//    return productShop.filter(pageable, query);
-//  }
-//
-//  @Transactional(readOnly = true)
-//  public List<Product> getProductsByPublicIdsIn(List<PublicId> publicIds) {
-//    return productCRUD.findAllByPublicIdIn(publicIds);
-//  }
-//
+  @Transactional(readOnly = true)
+  public Page<Product> getFeaturedProducts(Pageable pageable) {
+    return productShop.getFeaturedProducts(pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Optional<Product> findOne(PublicId id) {
+    return productCRUD.findOne(id);
+  }
+
+  @Transactional(readOnly = true)
+  public Page<Product> findRelated(Pageable pageable, PublicId productPublicId) {
+    return productShop.findRelated(pageable, productPublicId);
+  }
+
+  @Transactional(readOnly = true)
+  public Page<Product> filter(Pageable pageable, FilterQuery query) {
+    return productShop.filter(pageable, query);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Product> getProductsByPublicIdsIn(List<PublicId> publicIds) {
+    return productCRUD.findAllByPublicIdIn(publicIds);
+  }
+
 //  @Transactional
 //  public void updateProductQuantity(List<OrderProductQuantity> orderProductQuantities) {
 //    productUpdater.updateProductQuantity(orderProductQuantities);
