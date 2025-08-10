@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.initFontAwesome();
-    this.toastService.show('hello toast', 'SUCCESS')
+    // this.toastService.show('hello toast', 'SUCCESS')
   }
 
   private initFontAwesome() {
