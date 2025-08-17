@@ -25,4 +25,5 @@ export const fontAwesomeIcons: IconDefinition[] = [
   faCheck,
   faShoppingCart,
   faCircleCheck,
+  faShoppingCart
 ];
