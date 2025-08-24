@@ -6,6 +6,7 @@ import { Oauth2Service } from '../../auth/oauth2.service';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { ClickOutside } from 'ngxtension/click-outside';
+import { UserProductService } from '../../shared/service/user-product.service';
 
 @Component({
   selector: 'ecom-navbar',
@@ -15,12 +16,17 @@ import { ClickOutside } from 'ngxtension/click-outside';
 })
 export class NavbarComponent {
   oauth2Service = inject(Oauth2Service);
-  // todo productService = inject(UserProductService);
+  productService = inject(UserProductService);
+
+  nbItemsInCart: 0 | undefined;
+
   connectedUserQuery = this.oauth2Service.connectedUserQuery;
-  // categoryQuery = injectQuery(() => ({
-  //   queryKey: ['categories'],
-  //   //   queryFn: () => lastValueFrom(this.productService.findAllCategories()),
-  //   // }));
+  categoryQuery = injectQuery(() => ({
+    queryKey: ['categories'],
+    queryFn: () => lastValueFrom(this.productService.findAllCategories())
+  }));
+
+
   login(): void {
     this.closeDropDownMenu();
     this.oauth2Service.login();

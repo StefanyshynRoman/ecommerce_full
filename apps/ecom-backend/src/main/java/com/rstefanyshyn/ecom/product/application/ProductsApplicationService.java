@@ -28,7 +28,7 @@ public class ProductsApplicationService {
   public ProductsApplicationService(ProductRepository productRepository, CategoryRepository categoryRepository) {
     this.productCRUD = new ProductCRUD(productRepository);
     this.categoryCRUD = new CategoryCRUD(categoryRepository);
-   this.productShop = new ProductShop(productRepository);
+    this.productShop = new ProductShop(productRepository);
 //    this.productUpdater = new ProductUpdater(productRepository);
   }
 
