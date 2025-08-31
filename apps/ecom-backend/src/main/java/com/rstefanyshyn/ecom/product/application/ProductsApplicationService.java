@@ -86,7 +86,7 @@ public class ProductsApplicationService {
   public List<Product> getProductsByPublicIdsIn(List<PublicId> publicIds) {
     return productCRUD.findAllByPublicIdIn(publicIds);
   }
-
+//
 //  @Transactional
 //  public void updateProductQuantity(List<OrderProductQuantity> orderProductQuantities) {
 //    productUpdater.updateProductQuantity(orderProductQuantities);
