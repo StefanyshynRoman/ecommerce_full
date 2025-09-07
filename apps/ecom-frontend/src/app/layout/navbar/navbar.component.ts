@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -7,6 +7,7 @@ import { injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { ClickOutside } from 'ngxtension/click-outside';
 import { UserProductService } from '../../shared/service/user-product.service';
+import { CartService } from '../../shop/cart.service';
 
 @Component({
   selector: 'ecom-navbar',
@@ -14,11 +15,13 @@ import { UserProductService } from '../../shared/service/user-product.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+
   oauth2Service = inject(Oauth2Service);
   productService = inject(UserProductService);
+cartService=inject(CartService);
 
-  nbItemsInCart: 0 | undefined;
+  nbItemsInCart: number | undefined;
 
   connectedUserQuery = this.oauth2Service.connectedUserQuery;
   categoryQuery = injectQuery(() => ({
@@ -53,5 +56,15 @@ export class NavbarComponent {
 
   closeMenu(menu: HTMLDetailsElement) {
     menu.removeAttribute('open');
+  }
+  ngOnInit(): void {
+    this.listenToCart();
+  }
+
+  private listenToCart() {
+    this.cartService.addedToCart.subscribe((productsInCart) => {
+      this.nbItemsInCart = productsInCart.reduce(
+        (acc, product) => acc + product.quantity, 0 );
+    });
   }
 }

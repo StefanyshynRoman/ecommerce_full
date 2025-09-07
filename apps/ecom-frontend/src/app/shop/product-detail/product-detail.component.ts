@@ -10,6 +10,7 @@ import { injectQuery } from '@tanstack/angular-query-experimental';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { Product } from '../../admin/model/product.model';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'ecom-product-detail',
@@ -24,7 +25,7 @@ export class ProductDetailComponent {
   productService = inject(UserProductService);
   router = inject(Router);
   toastService = inject(ToastService);
-  //cartService = inject(CartService);
+  cartService = inject(CartService);
 
   lastPublicId = '';
 
@@ -89,7 +90,7 @@ export class ProductDetailComponent {
   }
 
   addToCart(productToAdd: Product) {
- //   this.cartService.addToCart(productToAdd.publicId, 'add');
+   this.cartService.addToCart(productToAdd.publicId, 'add');
     this.labelAddToCart = 'Added to cart';
     this.iconAddToCart = 'check';
 

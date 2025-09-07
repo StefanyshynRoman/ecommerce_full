@@ -1,28 +1,20 @@
 package com.rstefanyshyn.ecom.order.infrastructure.primary.order;
 
 import com.rstefanyshyn.ecom.order.application.OrderApplicationService;
-import com.rstefanyshyn.ecom.order.domain.order.aggregate.*;
-import com.rstefanyshyn.ecom.order.domain.order.vo.StripeSessionId;
+import com.rstefanyshyn.ecom.order.domain.order.aggregate.DetailCartItemRequest;
+import com.rstefanyshyn.ecom.order.domain.order.aggregate.DetailCartRequest;
+import com.rstefanyshyn.ecom.order.domain.order.aggregate.DetailCartRequestBuilder;
+import com.rstefanyshyn.ecom.order.domain.order.aggregate.DetailCartResponse;
 import com.rstefanyshyn.ecom.product.domain.vo.PublicId;
-import com.stripe.exception.SignatureVerificationException;
-import com.stripe.model.Address;
-import com.stripe.model.Event;
-import com.stripe.model.StripeObject;
-import com.stripe.model.checkout.Session;
-import com.stripe.net.Webhook;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-
-import static com.rstefanyshyn.ecom.product.infrastructure.primary.ProductsAdminResource.ROLE_ADMIN;
 
 
 @RestController
@@ -30,9 +22,9 @@ import static com.rstefanyshyn.ecom.product.infrastructure.primary.ProductsAdmin
 public class OrderResource {
 
   private final OrderApplicationService orderApplicationService;
-
-  @Value("${application.stripe.webhook-secret}")
-  private String webhookSecret;
+//
+//  @Value("${application.stripe.webhook-secret}")
+//  private String webhookSecret;
 
   public OrderResource(OrderApplicationService orderApplicationService) {
     this.orderApplicationService = orderApplicationService;
