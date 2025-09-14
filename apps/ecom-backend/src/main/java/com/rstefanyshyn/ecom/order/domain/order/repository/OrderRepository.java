@@ -1,0 +1,22 @@
+package com.rstefanyshyn.ecom.order.domain.order.repository;
+
+import com.rstefanyshyn.ecom.order.domain.order.aggregate.Order;
+import com.rstefanyshyn.ecom.order.domain.order.vo.OrderStatus;
+import com.rstefanyshyn.ecom.order.domain.user.vo.UserPublicId;
+import com.rstefanyshyn.ecom.product.domain.vo.PublicId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+public interface OrderRepository {
+
+  void save(Order order);
+
+  void updateStatusByPublicId(OrderStatus orderStatus, PublicId orderPublicId);
+
+  //todo  Optional<Order> findByStripeSessionId(StripeSessionInformation stripeSessionInformation);
+
+  Page<Order> findAllByUserPublicId(UserPublicId userPublicId, Pageable pageable);
+
+  Page<Order> findAll(Pageable pageable);
+
+}
