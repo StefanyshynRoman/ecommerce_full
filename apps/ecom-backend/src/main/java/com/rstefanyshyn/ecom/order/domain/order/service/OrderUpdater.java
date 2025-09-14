@@ -1,6 +1,5 @@
 package com.rstefanyshyn.ecom.order.domain.order.service;
-import com.rstefanyshyn.ecom.order.domain.order.aggregate.Order;
-import com.rstefanyshyn.ecom.order.domain.order.aggregate.OrderedProduct;
+import com.rstefanyshyn.ecom.order.domain.order.aggregate.*;
 import com.rstefanyshyn.ecom.order.domain.order.repository.OrderRepository;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ public class OrderUpdater {
     this.orderRepository = orderRepository;
   }
 
-  public List<OrderedProduct> updateOrderFromStripe(StripeSessionInformation stripeSessionInformation) {
+public List<OrderedProduct> updateOrderFromStripe(StripeSessionInformation stripeSessionInformation) {
     Order order = orderRepository.findByStripeSessionId(stripeSessionInformation).orElseThrow();
     order.validatePayment();
     orderRepository.updateStatusByPublicId(order.getStatus(), order.getPublicId());

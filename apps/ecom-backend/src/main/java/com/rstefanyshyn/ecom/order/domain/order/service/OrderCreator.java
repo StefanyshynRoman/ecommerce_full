@@ -6,6 +6,7 @@ import com.rstefanyshyn.ecom.order.domain.order.aggregate.OrderedProduct;
 import com.rstefanyshyn.ecom.order.domain.order.repository.OrderRepository;
 import com.rstefanyshyn.ecom.order.domain.order.vo.StripeSessionId;
 import com.rstefanyshyn.ecom.order.domain.user.aggregate.User;
+import com.rstefanyshyn.ecom.order.infrastructure.secondary.service.stripe.StripeService;
 import com.rstefanyshyn.ecom.product.domain.aggregate.Product;
 
 import java.util.ArrayList;
@@ -14,27 +15,25 @@ import java.util.List;
 public class OrderCreator {
 
   private final OrderRepository orderRepository;
-  //private final StripeService stripeService;
+  private final StripeService stripeService;
 
-  public OrderCreator(OrderRepository orderRepository
-                   //   StripeService stripeService
+  public OrderCreator(OrderRepository orderRepository,
+                      StripeService stripeService
   ) {
 
 
     this.orderRepository = orderRepository;
-  //  this.stripeService = stripeService;
+    this.stripeService = stripeService;
   }
 
   public StripeSessionId create(List<Product> productsInformations,
                                 List<DetailCartItemRequest> items,
                                 User connectedUser) {
 
-// todo   StripeSessionId stripeSessionId = this.stripeService.createPayment(connectedUser,
-//      productsInformations, items);
-    StripeSessionId stripeSessionId = null;
+    StripeSessionId stripeSessionId = this.stripeService.createPayment(connectedUser, productsInformations, items);
     List<OrderedProduct> orderedProducts = new ArrayList<>();
 
-    for(DetailCartItemRequest itemRequest: items) {
+    for (DetailCartItemRequest itemRequest : items) {
       Product productDetails = productsInformations.stream()
         .filter(product -> product.getPublicId().value().equals(itemRequest.productId().value()))
         .findFirst().orElseThrow();
@@ -43,7 +42,7 @@ public class OrderCreator {
       orderedProducts.add(orderedProduct);
     }
 
-    Order order = Order.create(connectedUser, orderedProducts, null);
+    Order order = Order.create(connectedUser, orderedProducts, stripeSessionId);
     orderRepository.save(order);
 
     return stripeSessionId;

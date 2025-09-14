@@ -1,5 +1,6 @@
 package com.rstefanyshyn.ecom.product.application;
 
+import com.rstefanyshyn.ecom.order.domain.order.aggregate.OrderProductQuantity;
 import com.rstefanyshyn.ecom.product.domain.aggregate.Category;
 import com.rstefanyshyn.ecom.product.domain.aggregate.FilterQuery;
 import com.rstefanyshyn.ecom.product.domain.aggregate.Product;
@@ -8,6 +9,7 @@ import com.rstefanyshyn.ecom.product.domain.repository.ProductRepository;
 import com.rstefanyshyn.ecom.product.domain.service.CategoryCRUD;
 import com.rstefanyshyn.ecom.product.domain.service.ProductCRUD;
 import com.rstefanyshyn.ecom.product.domain.service.ProductShop;
+import com.rstefanyshyn.ecom.product.domain.service.ProductUpdater;
 import com.rstefanyshyn.ecom.product.domain.vo.PublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,13 +25,13 @@ public class ProductsApplicationService {
   private ProductCRUD productCRUD;
   private CategoryCRUD categoryCRUD;
   private ProductShop productShop;
-//  private ProductUpdater productUpdater;
+  private ProductUpdater productUpdater;
 
   public ProductsApplicationService(ProductRepository productRepository, CategoryRepository categoryRepository) {
     this.productCRUD = new ProductCRUD(productRepository);
     this.categoryCRUD = new CategoryCRUD(categoryRepository);
     this.productShop = new ProductShop(productRepository);
-//    this.productUpdater = new ProductUpdater(productRepository);
+   this.productUpdater = new ProductUpdater(productRepository);
   }
 
   @Transactional
@@ -86,10 +88,10 @@ public class ProductsApplicationService {
   public List<Product> getProductsByPublicIdsIn(List<PublicId> publicIds) {
     return productCRUD.findAllByPublicIdIn(publicIds);
   }
-//
-//  @Transactional
-//  public void updateProductQuantity(List<OrderProductQuantity> orderProductQuantities) {
-//    productUpdater.updateProductQuantity(orderProductQuantities);
-//  }
+
+  @Transactional
+  public void updateProductQuantity(List<OrderProductQuantity> orderProductQuantities) {
+    productUpdater.updateProductQuantity(orderProductQuantities);
+  }
 
 }

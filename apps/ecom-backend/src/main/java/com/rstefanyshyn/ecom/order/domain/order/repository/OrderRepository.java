@@ -1,11 +1,14 @@
 package com.rstefanyshyn.ecom.order.domain.order.repository;
 
 import com.rstefanyshyn.ecom.order.domain.order.aggregate.Order;
+import com.rstefanyshyn.ecom.order.domain.order.aggregate.StripeSessionInformation;
 import com.rstefanyshyn.ecom.order.domain.order.vo.OrderStatus;
 import com.rstefanyshyn.ecom.order.domain.user.vo.UserPublicId;
 import com.rstefanyshyn.ecom.product.domain.vo.PublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Optional;
 
 public interface OrderRepository {
 
@@ -13,7 +16,7 @@ public interface OrderRepository {
 
   void updateStatusByPublicId(OrderStatus orderStatus, PublicId orderPublicId);
 
-  //todo  Optional<Order> findByStripeSessionId(StripeSessionInformation stripeSessionInformation);
+    Optional<Order> findByStripeSessionId(StripeSessionInformation stripeSessionInformation);
 
   Page<Order> findAllByUserPublicId(UserPublicId userPublicId, Pageable pageable);
 

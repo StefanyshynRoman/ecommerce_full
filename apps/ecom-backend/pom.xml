@@ -65,7 +65,7 @@
       <groupId>cc.jilt</groupId>
       <artifactId>jilt</artifactId>
       <version>1.6.1</version>
-      <scope>provided</scope> <!-- Jilt is not needed at runtime -->
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.stripe</groupId>
