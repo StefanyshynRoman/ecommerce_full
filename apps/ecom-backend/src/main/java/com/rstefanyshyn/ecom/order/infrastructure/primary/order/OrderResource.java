@@ -7,6 +7,7 @@ import com.rstefanyshyn.ecom.order.domain.order.vo.StripeSessionId;
 import com.rstefanyshyn.ecom.order.domain.user.vo.*;
 import com.rstefanyshyn.ecom.product.domain.vo.PublicId;
 import com.stripe.exception.SignatureVerificationException;
+import com.stripe.exception.StripeException;
 import com.stripe.model.Address;
 import com.stripe.model.Event;
 import com.stripe.model.StripeObject;
@@ -31,6 +32,10 @@ public class OrderResource {
 
   private final OrderApplicationService orderApplicationService;
 
+
+  @Value("${application.stripe.secret-key}")
+  private String stripeSecretKey;
+
   @Value("${application.stripe.webhook-secret}")
   private String webhookSecret;
 
@@ -44,7 +49,9 @@ public class OrderResource {
       .map(uuid -> new DetailCartItemRequest(new PublicId(uuid), 1))
       .toList();
 
-    DetailCartRequest detailCartRequest = DetailCartRequestBuilder.detailCartRequest().items(cartItemRequests).build();
+    DetailCartRequest detailCartRequest = DetailCartRequestBuilder.detailCartRequest()
+      .items(cartItemRequests)
+      .build();
     DetailCartResponse cartDetails = orderApplicationService.getCartDetails(detailCartRequest);
     return ResponseEntity.ok(RestDetailCartResponse.from(cartDetails));
   }
@@ -53,32 +60,34 @@ public class OrderResource {
   public ResponseEntity<RestStripeSession> initPayment(@RequestBody List<RestCartItemRequest> items) {
     List<DetailCartItemRequest> detailCartItemRequests = RestCartItemRequest.to(items);
     try {
+      // Встановлюємо secret key для Stripe
+      com.stripe.Stripe.apiKey = stripeSecretKey;
+
       StripeSessionId stripeSessionInformation = orderApplicationService.createOrder(detailCartItemRequests);
       RestStripeSession restStripeSession = RestStripeSession.from(stripeSessionInformation);
       return ResponseEntity.ok(restStripeSession);
-    } catch (CartPaymentException cpe) {
+    } catch (CartPaymentException e) {
+      e.printStackTrace();
       return ResponseEntity.badRequest().build();
     }
   }
 
   @PostMapping("/webhook")
-  public ResponseEntity<Void> webhookStripe(@RequestBody String paymentEvent,
+  public ResponseEntity<Void> webhookStripe(@RequestBody String payload,
                                             @RequestHeader("Stripe-Signature") String stripeSignature) {
-    Event event = null;
+    Event event;
     try {
-      event = Webhook.constructEvent(
-        paymentEvent, stripeSignature, webhookSecret
-      );
+      // Для верифікації підпису вебхука використовуємо webhook secret
+      event = Webhook.constructEvent(payload, stripeSignature, webhookSecret);
     } catch (SignatureVerificationException e) {
+      e.printStackTrace();
       return ResponseEntity.badRequest().build();
     }
 
     Optional<StripeObject> rawStripeObjectOpt = event.getDataObjectDeserializer().getObject();
 
-    switch (event.getType()) {
-      case "checkout.session.completed":
-        handleCheckoutSessionCompleted(rawStripeObjectOpt.orElseThrow());
-        break;
+    if ("checkout.session.completed".equals(event.getType())) {
+      handleCheckoutSessionCompleted(rawStripeObjectOpt.orElseThrow());
     }
 
     return ResponseEntity.ok().build();
@@ -108,6 +117,7 @@ public class OrderResource {
       orderApplicationService.updateOrder(sessionInformation);
     }
   }
+}
 
 //  @GetMapping("/user")
 //  public ResponseEntity<Page<RestOrderRead>> getOrdersForConnectedUser(Pageable pageable) {
@@ -131,4 +141,3 @@ public class OrderResource {
 //    );
 //    return ResponseEntity.ok(restOrderReads);
 //  }
-}

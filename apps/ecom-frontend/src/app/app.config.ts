@@ -7,6 +7,7 @@ import { AbstractSecurityStorage, authInterceptor, LogLevel, provideAuth } from 
 import { environment } from '../environments/environment';
 import { provideQueryClient, QueryClient } from '@tanstack/angular-query-experimental';
 import { SsrStorageService } from './auth/ssr-storage.service';
+import { provideNgxStripe } from 'ngx-stripe';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,7 +34,7 @@ export const appConfig: ApplicationConfig = {
     }),
     { provide: AbstractSecurityStorage, useClass: SsrStorageService },
     provideQueryClient(new QueryClient()),
-    // provideNgxStripe(environment.stripePublishableKey),
+    provideNgxStripe(environment.stripePublishableKey),
 
   ],
 };

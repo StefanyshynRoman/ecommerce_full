@@ -12,6 +12,7 @@ import com.rstefanyshyn.ecom.order.infrastructure.secondary.service.stripe.Strip
 import com.rstefanyshyn.ecom.product.application.ProductsApplicationService;
 import com.rstefanyshyn.ecom.product.domain.aggregate.Product;
 import com.rstefanyshyn.ecom.product.domain.vo.PublicId;
+import com.stripe.Stripe;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,7 @@ public class OrderApplicationService {
     User authenticatedUser = usersApplicationService.getAuthenticatedUser();
     List<PublicId> publicIds = items.stream().map(DetailCartItemRequest::productId).toList();
     List<Product> productsInformation = productsApplicationService.getProductsByPublicIdsIn(publicIds);
+    System.out.println("Using Stripe key: " + Stripe.apiKey);
     return orderCreator.create(productsInformation, items, authenticatedUser);
   }
 

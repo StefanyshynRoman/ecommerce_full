@@ -1,17 +1,16 @@
 import { Component, effect, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CartService } from '../cart.service';
+import { Oauth2Service } from '../../auth/oauth2.service';
+import { ToastService } from '../../shared/toast/toast.service';
+import { CartItem, CartItemAdd, StripeSession } from '../cart.model';
 import {
   injectMutation,
   injectQuery,
 } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { RouterLink } from '@angular/router';
-//import { StripeService } from 'ngx-stripe';
-import { CartService } from '../cart.service';
-import { Oauth2Service } from '../../auth/oauth2.service';
-import { ToastService } from '../../shared/toast/toast.service';
-import { CartItem, CartItemAdd, StripeSession } from '../cart.model';
-
+import { StripeService } from 'ngx-stripe';
 
 @Component({
   selector: 'ecom-cart',
@@ -24,7 +23,7 @@ export class CartComponent implements OnInit {
   cartService = inject(CartService);
   oauth2Service = inject(Oauth2Service);
   toastService = inject(ToastService);
- // stripeService = inject(StripeService);
+  stripeService = inject(StripeService);
 
   cart: Array<CartItem> = [];
 
@@ -44,7 +43,7 @@ export class CartComponent implements OnInit {
   initPaymentSession = injectMutation(() => ({
     mutationFn: (cart: Array<CartItemAdd>) =>
       lastValueFrom(this.cartService.initPaymentSession(cart)),
-   // onSuccess: (result: StripeSession) => this.onSessionCreateSuccess(result),
+    onSuccess: (result: StripeSession) => this.onSessionCreateSuccess(result),
   }));
 
   constructor() {
@@ -138,13 +137,13 @@ export class CartComponent implements OnInit {
     }
   }
 
-//   private onSessionCreateSuccess(sessionId: StripeSession) {
-//     this.cartService.storeSessionId(sessionId.id);
-//     this.stripeService
-//       .redirectToCheckout({ sessionId: sessionId.id })
-//       .subscribe((results) => {
-//         this.isInitPaymentSessionLoading = false;
-//         this.toastService.show(`Order error ${results.error.message}`, 'ERROR');
-//       });
-//   }
- }
+  private onSessionCreateSuccess(sessionId: StripeSession) {
+    this.cartService.storeSessionId(sessionId.id);
+    this.stripeService
+      .redirectToCheckout({ sessionId: sessionId.id })
+      .subscribe((results) => {
+        this.isInitPaymentSessionLoading = false;
+        this.toastService.show(`Order error ${results.error.message}`, 'ERROR');
+      });
+  }
+}
