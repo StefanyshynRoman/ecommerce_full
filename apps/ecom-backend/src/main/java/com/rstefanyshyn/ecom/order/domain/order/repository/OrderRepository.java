@@ -16,7 +16,7 @@ public interface OrderRepository {
 
   void updateStatusByPublicId(OrderStatus orderStatus, PublicId orderPublicId);
 
-    Optional<Order> findByStripeSessionId(StripeSessionInformation stripeSessionInformation);
+  Optional<Order> findByStripeSessionId(StripeSessionInformation stripeSessionInformation);
 
   Page<Order> findAllByUserPublicId(UserPublicId userPublicId, Pageable pageable);
 

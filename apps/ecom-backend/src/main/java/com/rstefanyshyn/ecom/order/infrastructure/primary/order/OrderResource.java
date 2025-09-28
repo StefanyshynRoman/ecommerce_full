@@ -7,18 +7,13 @@ import com.rstefanyshyn.ecom.order.domain.order.vo.StripeSessionId;
 import com.rstefanyshyn.ecom.order.domain.user.vo.*;
 import com.rstefanyshyn.ecom.product.domain.vo.PublicId;
 import com.stripe.exception.SignatureVerificationException;
-import com.stripe.exception.StripeException;
 import com.stripe.model.Address;
 import com.stripe.model.Event;
 import com.stripe.model.StripeObject;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,14 +55,12 @@ public class OrderResource {
   public ResponseEntity<RestStripeSession> initPayment(@RequestBody List<RestCartItemRequest> items) {
     List<DetailCartItemRequest> detailCartItemRequests = RestCartItemRequest.to(items);
     try {
-      // Встановлюємо secret key для Stripe
       com.stripe.Stripe.apiKey = stripeSecretKey;
 
       StripeSessionId stripeSessionInformation = orderApplicationService.createOrder(detailCartItemRequests);
       RestStripeSession restStripeSession = RestStripeSession.from(stripeSessionInformation);
       return ResponseEntity.ok(restStripeSession);
     } catch (CartPaymentException e) {
-      e.printStackTrace();
       return ResponseEntity.badRequest().build();
     }
   }
@@ -77,10 +70,8 @@ public class OrderResource {
                                             @RequestHeader("Stripe-Signature") String stripeSignature) {
     Event event;
     try {
-      // Для верифікації підпису вебхука використовуємо webhook secret
       event = Webhook.constructEvent(payload, stripeSignature, webhookSecret);
     } catch (SignatureVerificationException e) {
-      e.printStackTrace();
       return ResponseEntity.badRequest().build();
     }
 

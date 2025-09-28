@@ -22,16 +22,16 @@ import java.util.Optional;
 @Service
 public class ProductsApplicationService {
 
-  private ProductCRUD productCRUD;
-  private CategoryCRUD categoryCRUD;
-  private ProductShop productShop;
-  private ProductUpdater productUpdater;
+  private final ProductCRUD productCRUD;
+  private final CategoryCRUD categoryCRUD;
+  private final ProductShop productShop;
+  private final ProductUpdater productUpdater;
 
   public ProductsApplicationService(ProductRepository productRepository, CategoryRepository categoryRepository) {
     this.productCRUD = new ProductCRUD(productRepository);
     this.categoryCRUD = new CategoryCRUD(categoryRepository);
     this.productShop = new ProductShop(productRepository);
-   this.productUpdater = new ProductUpdater(productRepository);
+    this.productUpdater = new ProductUpdater(productRepository);
   }
 
   @Transactional

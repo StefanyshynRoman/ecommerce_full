@@ -18,7 +18,10 @@ public class OrderedProduct {
 
   private final ProductName productName;
 
-  public OrderedProduct(ProductPublicId productPublicId, OrderPrice price, OrderQuantity quantity, ProductName productName) {
+  public OrderedProduct(ProductPublicId productPublicId,
+                        OrderPrice price,
+                        OrderQuantity quantity,
+                        ProductName productName) {
     this.productPublicId = productPublicId;
     this.price = price;
     this.quantity = quantity;
